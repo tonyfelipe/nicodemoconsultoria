@@ -1,298 +1,163 @@
 /* ==========================================================================
-   VARIÁVEIS E CONFIGURAÇÃO BASE (Mobile-First & Performance)
+   CONFIGURAÇÕES GERAIS E VARIÁVEIS PREMIUM
    ========================================================================== */
 :root {
-    --bg-primary: #ffffff;
-    --text-main: #18181b;
-    --text-muted: #71717a;
+    --bg-main: #0b0b0c;
+    --bg-surface: #121214;
+    --text-primary: #f4f4f5;
+    --text-secondary: #a1a1aa;
     --gold: #d4af37;
-    --green-open: #2ed573;
-    --red-alert: #ff4757;
-    --border-color: #e4e4e7;
-    --radius: 16px;
-    --transition: all 0.2s ease-in-out;
+    --gold-hover: #f3cd57;
+    --border: #27272a;
+    --radius-lg: 12px;
+    --radius-sm: 6px;
+    --max-width: 1200px;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: #f4f4f5;
-    color: var(--text-main);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 1rem;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
 }
 
-/* Acessibilidade: Skip Link Visível apenas no TAB */
+/* Skip link para acessibilidade por teclado */
 .skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--gold);
-    color: #000;
-    padding: 8px;
-    z-index: 100;
-    transition: top 0.2s;
+    position: absolute; top: -100px; left: 20px;
+    background: var(--gold); color: #000; padding: 10px;
+    z-index: 1000; transition: top 0.2s; font-weight: bold;
 }
-.skip-link:focus { top: 0; }
+.skip-link:focus { top: 20px; }
 
 /* ==========================================================================
-   ESTRUTURA DO CARTÃO (CONTAINER)
+   MENU SUPERIOR (HEADER)
    ========================================================================== */
-.card-container {
-    background: var(--bg-primary);
-    width: 100%;
-    max-width: 420px; /* Perfeito para Mobile / PWA */
-    border-radius: var(--radius);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
-    position: relative;
+.header-navigation {
+    background-color: rgba(11, 11, 12, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 500;
 }
 
-/* Banner Superior */
-.header-banner {
-    height: 120px;
-    background: linear-gradient(135deg, #111 0%, #333 100%);
-    position: relative;
+.nav-container {
+    max-width: var(--max-width); margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
 }
 
-/* Perfil e Animação do Logo Dourado */
-.profile-section {
-    display: flex;
-    justify-content: center;
-    margin-top: -60px;
-    position: relative;
-    z-index: 2;
-}
+.logo-area { display: flex; align-items: center; gap: 10px; }
+.nav-brand-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 2px; color: var(--gold); }
 
-.avatar-wrapper {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 4px solid var(--bg-primary);
-    background: #e4e4e7;
-    overflow: hidden;
-    cursor: pointer;
-}
+.nav-menu { list-style: none; display: flex; align-items: center; gap: 2rem; }
+.nav-menu a { color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: 0.2s; }
+.nav-menu a:hover { color: var(--text-primary); }
 
-.profile-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--transition);
+.btn-nav-cta {
+    background: transparent; border: 1px solid var(--gold); color: var(--gold) !important;
+    padding: 6px 16px; border-radius: var(--radius-sm);
 }
-
-/* Efeito Premium de Fusão da Logo no Hover/Touch */
-.logo-overlay-animated {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: var(--transition);
-    transform: scale(0.8);
-}
-
-.avatar-wrapper:hover .logo-overlay-animated,
-.avatar-wrapper:focus-within .logo-overlay-animated {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.gold-logo-svg {
-    width: 80%;
-    height: 80%;
-    animation: rotateLogo 12s linear infinite;
-}
-
-@keyframes rotateLogo {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-/* Infomações Principais */
-.main-info {
-    text-align: center;
-    padding: 1.2rem 1rem 0.5rem;
-}
-
-.brand-name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-}
-
-.owner-name {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-}
-
-.status-badge-top {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    background: #e8fbf2;
-    color: #12b76a;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 20px;
-}
+.btn-nav-cta:hover { background: var(--gold); color: #000 !important; }
 
 /* ==========================================================================
-   BOTÕES DE AÇÃO (CRO & ACESSIBILIDADE)
+   SEÇÃO HERO (ABERTURA IMPACTANTE)
    ========================================================================== */
-.action-buttons {
-    display: flex;
-    gap: 12px;
-    padding: 1rem;
+.hero-section { padding: 8rem 2rem 4rem; }
+.hero-container {
+    max-width: var(--max-width); margin: 0 auto;
+    display: grid; grid-template-columns: 1.2s 0.8fr; gap: 4rem; align-items: center;
 }
 
+.hero-tag {
+    display: inline-block; background: rgba(212, 175, 55, 0.1); color: var(--gold);
+    font-size: 0.8rem; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-bottom: 1rem;
+}
+
+.hero-title {
+    font-family: 'Space Grotesk', sans-serif; font-size: 3rem; line-height: 1.2; font-weight: 700; margin-bottom: 1.5rem;
+}
+.hero-title .highlight { color: var(--gold); }
+
+.hero-subtitle { color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 2rem; max-width: 540px; }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* Botões Customizados */
 .btn {
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-height: 48px; /* Mínimo exigido pela WCAG para clique mobile */
-    border: 1px solid var(--border-color);
-    border-radius: 24px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    background: var(--bg-primary);
-    color: var(--text-main);
-    transition: var(--transition);
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 24px; min-height: 48px; border-radius: var(--radius-sm);
+    font-weight: 600; text-decoration: none; cursor: pointer; transition: 0.2s; border: none;
 }
+.btn-primary { background: var(--gold); color: #000; }
+.btn-primary:hover { background: var(--gold-hover); }
+.btn-secondary { background: var(--bg-surface); color: var(--text-primary); border: 1px solid var(--border); }
+.btn-secondary:hover { background: #1c1c1f; }
+.icon { width: 18px; height: 18px; }
 
-.btn-call {
-    background: var(--text-main);
-    color: var(--bg-primary);
-    border: none;
+/* Bloco de Imagem */
+.visual-wrapper {
+    position: relative; border-radius: var(--radius-lg); overflow: hidden;
+    border: 1px solid var(--border); background: var(--bg-surface); aspect-ratio: 4/5;
 }
-
-.btn-call:hover { background: #27272a; }
-.btn-share:hover { background: #f4f4f5; }
-
-.icon {
-    width: 20px;
-    height: 20px;
-}
-
-.divider {
-    border: 0;
-    border-top: 1px solid var(--border-color);
-    margin: 0 1rem;
-}
+.hero-img { width: 100%; height: 100%; object-fit: cover; }
+.visual-overlay { position: absolute; inset: 0; background: linear-gradient(to top, var(--bg-main) 0%, transparent 40%); }
 
 /* ==========================================================================
-   DETALHES OPERACIONAIS E MAPA
+   SEÇÃO SE SERVIÇOS / DIFERENCIAIS
    ========================================================================== */
-.details-section {
-    padding: 1rem;
+.features-section { padding: 4rem 2rem; background: var(--bg-surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.section-container { max-width: var(--max-width); margin: 0 auto; }
+.section-title { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; text-align: center; margin-bottom: 3rem; color: var(--gold); }
+
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+.feature-card {
+    background: var(--bg-main); border: 1px solid var(--border); padding: 2rem; border-radius: var(--radius-lg);
+    transition: transform 0.2s;
+}
+.feature-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+.feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+.feature-card h3 { margin-bottom: 0.5rem; font-size: 1.25rem; }
+.feature-card p { color: var(--text-secondary); font-size: 0.95rem; }
+
+/* ==========================================================================
+   SEÇÃO LOCALIZAÇÃO E MAPA
+   ========================================================================== */
+.location-section { padding: 6rem 2rem; }
+.location-container {
+    max-width: var(--max-width); margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center;
 }
 
-.detail-item {
-    display: flex;
-    gap: 12px;
-    padding: 0.75rem 0;
-}
+.inline-address { font-style: normal; display: inline; color: var(--text-primary); }
+.address-text { display: flex; gap: 8px; align-items: flex-start; margin: 1.5rem 0 1rem; color: var(--gold); }
+.icon-inline { width: 20px; height: 20px; flex-shrink: 0; }
+.location-desc { color: var(--text-secondary); margin-bottom: 2rem; }
 
-.detail-content {
-    display: flex;
-    flex-direction: column;
+.map-interactive-mockup {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: #1c1c1e url('https://maps.gstatic.com/tactile/pane/default_geocode-2x.png') no-repeat center;
+    background-size: cover; height: 350px; border-radius: var(--radius-lg);
+    border: 1px solid var(--border); text-decoration: none; position: relative;
 }
+.map-interactive-mockup::before { content: ''; position: absolute; inset:0; background: rgba(0,0,0,0.6); border-radius: var(--radius-lg); }
+.map-pin { font-size: 2.5rem; z-index: 2; animation: bounce 2s infinite alternate; }
+.map-label { color: #fff; z-index: 2; font-weight: 600; font-size: 0.9rem; background: rgba(0,0,0,0.8); padding: 6px 12px; border-radius: 4px; margin-top: 10px; }
 
-.detail-title {
-    font-size: 0.95rem;
-    font-weight: 500;
-}
+@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
 
-.status-open {
-    color: var(--green-open);
-    font-weight: 600;
-    font-size: 0.95rem;
-}
+/* ==========================================================================
+   RODAPÉ E RESPONSIVIDADE MOBILE
+   ========================================================================== */
+.footer-corporate { padding: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.9rem; color: var(--text-secondary); }
+.footer-container { max-width: var(--max-width); margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.dev-credits { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
 
-.detail-sub {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-}
-
-.detail-text {
-    font-style: normal;
-    font-size: 0.9rem;
-    color: var(--text-main);
-    line-height: 1.4;
-}
-
-/* Seção do Mockup do Mapa */
-.map-section {
-    padding: 0 1rem 1.5rem;
-}
-
-.map-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.map-mockup {
-    background: #e4e4e7;
-    border: 1px solid var(--border-color);
-    border-radius: calc(var(--radius) - 4px);
-    padding: 1.2rem;
-    text-align: center;
-    position: relative;
-    transition: var(--transition);
-}
-
-.map-mockup:hover {
-    border-color: var(--gold);
-    background: #ebebe0;
-}
-
-.map-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: var(--text-muted);
-}
-
-.map-pin {
-    font-size: 1.5rem;
-    margin: 8px 0;
-}
-
-.map-action {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #0066cc;
-    text-decoration: underline;
-}
-
-/* Rodapé */
-.footer-credits {
-    text-align: center;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    margin-top: 1.5rem;
-    padding-bottom: 1rem;
+/* MEDIA QUERIES (A MÁGICA DO MOBILE-FIRST REVERSO) */
+@media (max-width: 900px) {
+    .nav-menu { display: none; } /* Hambúrguer ou Menu simplificado pode entrar aqui */
+    .hero-container, .location-container { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-visual { order: -1; } /* Imagem vai pro topo no mobile */
+    .hero-title { font-size: 2.2rem; }
+    .footer-container { flex-direction: column; align-items: center; }
 }
