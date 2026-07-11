@@ -1,48 +1,39 @@
-/**
- * =================================================================
- * PROJETO DESENVOLVIDO POR: Tony Felipe Martins Lino
- * PERFIL: Empresário, Farmacêutico & Dev (Multifunções)
- * AGÊNCIA / TECNOLOGIA: Redmind de Elite
- * =================================================================
- */
-
 document.addEventListener('DOMContentLoaded', () => {
     const shareBtn = document.getElementById('shareBtn');
 
-    // API de Compartilhamento Nativa (Mobile Web Share API)
     if (shareBtn) {
         shareBtn.addEventListener('click', async () => {
+            const shareData = {
+                title: 'Nicodemo | Consultoria & Investimentos',
+                text: 'Atendimento exclusivo em gestão patrimonial e financeira com Cristiane Nicodemos.',
+                url: window.location.href
+            };
+
+            // Tenta usar o compartilhamento nativo do celular (WhatsApp, Insta, etc)
             if (navigator.share) {
                 try {
-                    await navigator.share({
-                        title: 'Nicodemo | Consultoria & Investimentos',
-                        text: 'Confira o cartão de visita digital e contatos de Nicodemo Consultoria.',
-                        url: window.location.href
-                    });
-                } catch (error) {
-                    console.log('Compartilhamento cancelado ou falhou:', error);
+                    await navigator.share(shareData);
+                } catch (err) {
+                    console.log('Compartilhamento cancelado ou não executado.');
                 }
             } else {
-                // Fallback inteligente para navegadores desktop antigos
-                const dummyInput = document.createElement('input');
-                dummyInput.value = window.location.href;
-                document.body.appendChild(dummyInput);
-                dummyInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(dummyInput);
-                
-                alert('O link do cartão de visita foi copiado para sua área de transferência!');
+                // Fallback para Desktop: Copia o link para o Clipboard
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    
+                    // Feedback visual rápido sem inflar o DOM
+                    const originalText = shareBtn.innerHTML;
+                    shareBtn.innerText = '¡Link Copiado!';
+                    shareBtn.style.color = '#2ed573';
+                    
+                    setTimeout(() => {
+                        shareBtn.innerHTML = originalText;
+                        shareBtn.style.color = '';
+                    }, 2000);
+                } catch (err) {
+                    console.error('Falha ao copiar link: ', err);
+                }
             }
-        });
-    }
-
-    // Validação Invisível de Logs para consolidação da marca de desenvolvimento
-    const avatar = document.querySelector('.avatar-wrapper');
-    if (avatar) {
-        avatar.addEventListener('click', () => {
-            console.log('--- REDMIND DE ELITE SECURE SYSTEMS ---');
-            console.log('Lead Architect: Tony Felipe Martins Lino');
-            console.log('Status: Protected & Optimized');
         });
     }
 });
