@@ -1,5 +1,17 @@
-/* Reset de Layout e Fontes de Alta Qualidade */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+/* ==========================================================================
+   VARIÁVEIS E CONFIGURAÇÃO BASE (Mobile-First & Performance)
+   ========================================================================== */
+:root {
+    --bg-primary: #ffffff;
+    --text-main: #18181b;
+    --text-muted: #71717a;
+    --gold: #d4af37;
+    --green-open: #2ed573;
+    --red-alert: #ff4757;
+    --border-color: #e4e4e7;
+    --radius: 16px;
+    --transition: all 0.2s ease-in-out;
+}
 
 * {
     box-sizing: border-box;
@@ -8,102 +20,95 @@
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: #0d0d11;
-    color: #ffffff;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f4f4f5;
+    color: var(--text-main);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     min-height: 100vh;
-    padding: 15px;
+    padding: 1rem;
 }
 
-/* Container do Cartão de Visita */
-.card-container {
-    background-color: #15151a;
-    width: 100%;
-    max-width: 430px;
-    border-radius: 28px;
-    overflow: hidden;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(212, 175, 55, 0.12);
-    position: relative;
-    padding-bottom: 24px;
-    animation: slideUpFade 0.7s cubic-bezier(0.1, 0.8, 0.3, 1);
-}
-
-/* Banner de Fundo do Topo */
-.header-banner {
-    height: 135px;
-    background: linear-gradient(145deg, #1f1f26 0%, #08080a 100%);
-    position: relative;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
-}
-
-.banner-overlay {
+/* Acessibilidade: Skip Link Visível apenas no TAB */
+.skip-link {
     position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--gold);
+    color: #000;
+    padding: 8px;
+    z-index: 100;
+    transition: top 0.2s;
+}
+.skip-link:focus { top: 0; }
+
+/* ==========================================================================
+   ESTRUTURA DO CARTÃO (CONTAINER)
+   ========================================================================== */
+.card-container {
+    background: var(--bg-primary);
     width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.3));
+    max-width: 420px; /* Perfeito para Mobile / PWA */
+    border-radius: var(--radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    position: relative;
 }
 
-/* Avatar de Perfil com Transição e Fusão da Logo */
-.profile-section {
+/* Banner Superior */
+.header-banner {
+    height: 120px;
+    background: linear-gradient(135deg, #111 0%, #333 100%);
     position: relative;
+}
+
+/* Perfil e Animação do Logo Dourado */
+.profile-section {
     display: flex;
     justify-content: center;
-    margin-top: -75px;
-    z-index: 10;
+    margin-top: -60px;
+    position: relative;
+    z-index: 2;
 }
 
 .avatar-wrapper {
     position: relative;
-    width: 145px;
-    height: 145px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    padding: 4px;
-    background: linear-gradient(135deg, #D4AF37 0%, #83651d 100%);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    border: 4px solid var(--bg-primary);
+    background: #e4e4e7;
+    overflow: hidden;
     cursor: pointer;
 }
 
-.profile-img-placeholder {
+.profile-img {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    background-color: #23232c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    border: 3px solid #15151a;
+    object-fit: cover;
+    transition: var(--transition);
 }
 
-.img-text {
-    font-size: 10px;
-    color: #8e8e9a;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-}
-
-/* Efeito de Fusão da Logo Nicodemo no Hover */
+/* Efeito Premium de Fusão da Logo no Hover/Touch */
 .logo-overlay-animated {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    background: rgba(10, 10, 13, 0.85);
+    background: rgba(0, 0, 0, 0.75);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     opacity: 0;
-    transform: scale(0.85);
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: var(--transition);
+    transform: scale(0.8);
 }
 
-.avatar-wrapper:hover .logo-overlay-animated {
+.avatar-wrapper:hover .logo-overlay-animated,
+.avatar-wrapper:focus-within .logo-overlay-animated {
     opacity: 1;
     transform: scale(1);
 }
@@ -111,227 +116,7 @@ body {
 .gold-logo-svg {
     width: 80%;
     height: 80%;
-    animation: rotateLogo 20s linear infinite;
-}
-
-/* Informações da Empresa */
-.main-info {
-    text-align: center;
-    margin-top: 14px;
-    padding: 0 20px;
-}
-
-.brand-name {
-    font-family: 'Cinzel', serif;
-    font-size: 25px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 1px;
-}
-
-.owner-name {
-    font-size: 14px;
-    color: #a0a0ab;
-    margin-top: 2px;
-}
-
-.status-badge-top {
-    display: inline-flex;
-    align-items: center;
-    background-color: rgba(46, 213, 115, 0.08);
-    color: #2ed573;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 6px 14px;
-    border-radius: 50px;
-    margin-top: 12px;
-    border: 1px solid rgba(46, 213, 115, 0.18);
-}
-
-.checkmark {
-    margin-right: 5px;
-    font-weight: bold;
-}
-
-/* Botões Principais Grid */
-.action-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    padding: 22px;
-}
-
-.btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 13px;
-    border-radius: 14px;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    border: none;
-    outline: none;
-}
-
-.btn .icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 6px;
-}
-
-.btn-call {
-    background-color: #ffffff;
-    color: #0d0d11;
-}
-
-.btn-call:hover {
-    background-color: #e4e4eb;
-    transform: translateY(-2px);
-}
-
-.btn-share {
-    background-color: #202027;
-    color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.btn-share:hover {
-    background-color: #292933;
-    border-color: #D4AF37;
-    transform: translateY(-2px);
-}
-
-.divider {
-    border: 0;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.2), transparent);
-    margin: 0 22px;
-}
-
-/* Seção de Dados e Transparência */
-.details-section {
-    padding: 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.detail-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.detail-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 24px;
-}
-
-.detail-content {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 4px;
-}
-
-.detail-title {
-    font-size: 14px;
-    font-weight: 500;
-    color: #e2e2e8;
-}
-
-.status-open {
-    color: #2ed573;
-    font-weight: 600;
-    font-size: 14px;
-}
-
-.detail-sub {
-    font-size: 13px;
-    color: #8e8e9a;
-}
-
-.detail-text {
-    font-size: 13.5px;
-    color: #e2e2e8;
-    line-height: 1.4;
-}
-
-/* Estilização do Mini Mapa Mockup */
-.map-section {
-    padding: 0 22px;
-}
-
-.map-link {
-    text-decoration: none;
-}
-
-.map-mockup {
-    background-color: #1a1a22;
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    border-radius: 16px;
-    height: 110px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-
-.map-mockup::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: radial-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 0);
-    background-size: 14px 14px;
-}
-
-.map-mockup:hover {
-    border-color: rgba(212, 175, 55, 0.4);
-    background-color: #1e1e27;
-}
-
-.map-tag {
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    color: #83651d;
-    font-weight: 600;
-    z-index: 2;
-}
-
-.map-pin {
-    font-size: 20px;
-    margin: 3px 0;
-    z-index: 2;
-    animation: miniBounce 2s infinite;
-}
-
-.map-action {
-    font-size: 11px;
-    color: #D4AF37;
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    z-index: 2;
-}
-
-/* Keyframes de Animação */
-@keyframes slideUpFade {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    animation: rotateLogo 12s linear infinite;
 }
 
 @keyframes rotateLogo {
@@ -339,7 +124,175 @@ body {
     to { transform: rotate(360deg); }
 }
 
-@keyframes miniBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+/* Infomações Principais */
+.main-info {
+    text-align: center;
+    padding: 1.2rem 1rem 0.5rem;
+}
+
+.brand-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.owner-name {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.status-badge-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #e8fbf2;
+    color: #12b76a;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+/* ==========================================================================
+   BOTÕES DE AÇÃO (CRO & ACESSIBILIDADE)
+   ========================================================================== */
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    padding: 1rem;
+}
+
+.btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px; /* Mínimo exigido pela WCAG para clique mobile */
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    background: var(--bg-primary);
+    color: var(--text-main);
+    transition: var(--transition);
+}
+
+.btn-call {
+    background: var(--text-main);
+    color: var(--bg-primary);
+    border: none;
+}
+
+.btn-call:hover { background: #27272a; }
+.btn-share:hover { background: #f4f4f5; }
+
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    margin: 0 1rem;
+}
+
+/* ==========================================================================
+   DETALHES OPERACIONAIS E MAPA
+   ========================================================================== */
+.details-section {
+    padding: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    gap: 12px;
+    padding: 0.75rem 0;
+}
+
+.detail-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.status-open {
+    color: var(--green-open);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.detail-sub {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.detail-text {
+    font-style: normal;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    line-height: 1.4;
+}
+
+/* Seção do Mockup do Mapa */
+.map-section {
+    padding: 0 1rem 1.5rem;
+}
+
+.map-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.map-mockup {
+    background: #e4e4e7;
+    border: 1px solid var(--border-color);
+    border-radius: calc(var(--radius) - 4px);
+    padding: 1.2rem;
+    text-align: center;
+    position: relative;
+    transition: var(--transition);
+}
+
+.map-mockup:hover {
+    border-color: var(--gold);
+    background: #ebebe0;
+}
+
+.map-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.map-pin {
+    font-size: 1.5rem;
+    margin: 8px 0;
+}
+
+.map-action {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #0066cc;
+    text-decoration: underline;
+}
+
+/* Rodapé */
+.footer-credits {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 1.5rem;
+    padding-bottom: 1rem;
 }
