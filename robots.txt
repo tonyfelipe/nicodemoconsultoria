@@ -1,0 +1,10 @@
+# Padrão para todos os motores de busca e crawlers de IA
+User-agent: *
+Allow: /
+
+# Evita a indexação de arquivos internos de desenvolvimento ou scripts privados se houverem
+Disallow: /config/
+Disallow: /admin/
+
+# Link direto para o mapa do site (Substitua pelo domínio final quando ativo)
+Sitemap: https://www.nicodemoconsultoria.com.br/sitemap.xml
